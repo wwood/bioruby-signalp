@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "bio-signalp"
   gem.homepage = "http://github.com/wwood/bioruby-signalp"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{A wrapper for the signal peptide prediction algorith SignalP}
+  gem.description = %Q{A wrapper for the signal peptide prediction algorith SignalP. Not very well supported, but seems to work for the author, at least.}
   gem.email = "donttrustben near gmail.com"
   gem.authors = ["Ben J Woodcroft"]
   # dependencies defined in Gemfile
