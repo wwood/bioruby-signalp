@@ -1,6 +1,10 @@
 = bio-signalp
 
-Description goes here.
+A wrapper for the signal peptide prediction algorithm SignalP.
+
+Using this bio-gem requires SignalP to be locally installed and configured correctly. http://www.cbs.dtu.dk/services/SignalP/ has instructions on how it may be downloaded. This gem requires that the signalp executable is available from the command line (i.e. running 'signalp' works at the command).
+
+Only compatible with Ruby 1.8 at this stage, because of the dependency on the rio gem. This might be replaced in the future with using BioRuby's Bio::Command class.
 
 == Contributing to bio-signalp
  
