@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{bio-signalp}
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ben J Woodcroft"]
   s.date = %q{2011-07-25}
-  s.description = %q{TODO: longer description of your gem}
+  s.description = %q{A wrapper for the signal peptide prediction algorith SignalP. Not very well supported, but seems to work for the author, at least.}
   s.email = %q{donttrustben near gmail.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -19,11 +19,14 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "bio-signalp.gemspec",
     "lib/bio-signalp.rb",
+    "lib/bio/appl/signalp.rb",
     "test/helper.rb",
     "test/test_bio-signalp.rb"
   ]
@@ -31,7 +34,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.6.1}
-  s.summary = %q{TODO: one-line summary of your gem}
+  s.summary = %q{A wrapper for the signal peptide prediction algorith SignalP}
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
