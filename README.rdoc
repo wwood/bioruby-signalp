@@ -6,6 +6,8 @@ Using this bio-gem requires SignalP to be locally installed and configured corre
 
 Only compatible with Ruby 1.8 at this stage, because of the dependency on the rio gem. This might be replaced in the future with using BioRuby's Bio::Command class.
 
+This bio-gem is merely a software library, and does not (currently) include any scripts. An example script is freely available at https://github.com/wwood/bbbin/blob/master/signalp.rb
+
 == Contributing to bio-signalp
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
