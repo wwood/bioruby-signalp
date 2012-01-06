@@ -29,9 +29,9 @@ module Bio
             raise Exception, "Unexpected number of lines found in SignalP output (#{result.length}, expected #{num_expected_result_lines}):\n#{result}"
           end
           
-          splits = line.split(/[ \t]+/)
+          splits = result[2].strip.split(/[ \t]+/)
           if splits.length != NUM_FIELDS_IN_SHORT_OUTPUT
-            raise Exception, "Bad SignalP output line found. Are you using SignalP 3.0? (expected #{matches.length} fields, found #{matches.length} fields):\n#{result[2]}"
+            raise Exception, "Bad SignalP output line found. Are you using SignalP 3.0? (expected #{NUM_FIELDS_IN_SHORT_OUTPUT} fields, found #{splits.length} fields):\n#{result[2]}"
           end
           
           return Result.create_from_line(result[2].strip)

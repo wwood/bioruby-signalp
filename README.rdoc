@@ -25,6 +25,6 @@ NOTE: Only tested with SignalP 3.0 at this point. Hopefully 4.0 will be tested i
 
 == Copyright
 
-Copyright (c) 2011 Ben J Woodcroft. See LICENSE.txt for
+Copyright (c) 2011-2012 Ben J Woodcroft. See LICENSE.txt for
 further details.
 
