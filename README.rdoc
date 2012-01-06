@@ -1,12 +1,17 @@
 = bio-signalp
 
-A wrapper for the signal peptide prediction algorithm SignalP.
+A wrapper for the signal peptide prediction algorithm SignalP (version 3.0).
 
-Using this bio-gem requires SignalP to be locally installed and configured correctly. http://www.cbs.dtu.dk/services/SignalP/ has instructions on how it may be downloaded. This gem requires that the signalp executable is available from the command line (i.e. running 'signalp' works at the command).
+Using this bio-gem requires SignalP to be locally installed and configured correctly. http://www.cbs.dtu.dk/services/SignalP-3.0/ has instructions on how it may be downloaded. This gem requires that the signalp executable is available from the command line (i.e. running 'signalp' works at the command), so the steps to setup
+
+# Download SignalP 3.0 and unpack
+# Modify the signalp script in the unpacked directory
+# Add the unpacked directory to your path
+# install this bioruby plugin (gem install bioruby-signalp)
 
 This bio-gem includes a library for interacting with signalp programmatically, but also (as of version 0.1.1) a script as well.
 
-Only tested with SignalP 3.0 at this point. Hopefully 4.0 will be tested in the future.
+NOTE: Only tested with SignalP 3.0 at this point. Hopefully 4.0 will be tested in the future.
 
 == Contributing to bio-signalp
  

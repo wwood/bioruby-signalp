@@ -4,6 +4,8 @@ require 'open3'
 # Wrapper around a locally installed SignalP program
 module Bio
   class SignalP
+    NUM_FIELDS_IN_SHORT_OUTPUT = 21
+    
     class Wrapper
       # Given an amino acid sequence, return a SignalPResult
       # representing it taken from the file.
@@ -13,17 +15,25 @@ module Bio
           stdin.puts '>wrapperSeq'
           stdin.puts "#{sequence}"
           stdin.close
-
+          
           result = stdout.readlines
           error = stderr.readlines
-
+          
           unless error.empty?
             raise Exception, "There appears to be a problem while running signalp:\n#{error}"
           end
-          num_expected_result_lines = 3 
+          
+          # Error checking
+          num_expected_result_lines = 3
           unless result.length == num_expected_result_lines
             raise Exception, "Unexpected number of lines found in SignalP output (#{result.length}, expected #{num_expected_result_lines}):\n#{result}"
           end
+          
+          splits = line.split(/[ \t]+/)
+          if splits.length != NUM_FIELDS_IN_SHORT_OUTPUT
+            raise Exception, "Bad SignalP output line found. Are you using SignalP 3.0? (expected #{matches.length} fields, found #{matches.length} fields):\n#{result[2]}"
+          end
+          
           return Result.create_from_line(result[2].strip)
         end
       end
@@ -55,7 +65,7 @@ module Bio
         # # name                Cmax  pos ?  Ymax  pos ?  Smax  pos ?  Smean ?  D     ?   # name      !  Cmax  pos ?  Sprob ?
         # 526.m04658            0.734  19 Y  0.686  19 Y  0.933   6 Y  0.760 Y  0.723 Y 526.m04658  Q  0.037  19 N  0.004 N
         matches = line.split(/[ \t]+/)
-        if matches.length != 21
+        if matches.length != NUM_FIELDS_IN_SHORT_OUTPUT
           raise Exception, "Bad SignalP Short Line Found (#{matches.length}): '#{line}'"
         end
         
