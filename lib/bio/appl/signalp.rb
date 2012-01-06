@@ -1,31 +1,31 @@
 # Methods to wrap around the signal peptide prediction program SignalP (version 3.0)
-require 'tempfile'
-require 'rubygems'
-require 'rio'
+require 'open3'
 
 # Wrapper around a locally installed SignalP program
 module Bio
   class SignalP
-    class Wrapper      
+    class Wrapper
       # Given an amino acid sequence, return a SignalPResult
       # representing it taken from the file.
       def calculate(sequence)
-        Tempfile.open('signalpin') { |tempfilein|
-          # Write a fasta to the tempfile
-          tempfilein.puts '>wrapperSeq'
-          tempfilein.puts "#{sequence}"
-          tempfilein.close #required. Maybe because it doesn't flush otherwise?
-          
-          Tempfile.open('signalpout') {|out|
-            result = system("signalp -trunc 70 -format short -t euk #{tempfilein.path} >#{out.path}")
-            
-            if !result
-              raise Exception, "Running signalp program failed. $? is #{$!.inspect}"
-            end
-            line = rio(out.path)[2][0].strip
-            return Result.create_from_line(line)
-          }
-        }
+        command = 'signalp -trunc 70 -format short -t euk'
+        Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
+          stdin.puts '>wrapperSeq'
+          stdin.puts "#{sequence}"
+          stdin.close
+
+          result = stdout.readlines
+          error = stderr.readlines
+
+          unless error.empty?
+            raise Exception, "There appears to be a problem while running signalp:\n#{error}"
+          end
+          num_expected_result_lines = 3 
+          unless result.length == num_expected_result_lines
+            raise Exception, "Unexpected number of lines found in SignalP output (#{result.length}, expected #{num_expected_result_lines}):\n#{result}"
+          end
+          return Result.create_from_line(result[2].strip)
+        end
       end
     end
     
