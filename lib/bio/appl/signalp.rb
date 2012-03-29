@@ -9,7 +9,11 @@ module Bio
     class Wrapper
       # Given an amino acid sequence, return a SignalPResult
       # representing it taken from the file.
+      #
+      # Returns nil if the sequence is empty
       def calculate(sequence)
+        return nil if sequence.nil? or sequence == ''
+        
         command = 'signalp -trunc 70 -format short -t euk'
         Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
           stdin.puts '>wrapperSeq'

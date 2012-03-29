@@ -2,6 +2,9 @@
 
 require 'rubygems'
 require 'bio'
+
+# always load from the directory relative to the current script's directory
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 require 'bio-signalp'
 
 # if this was not called as a module, run as a script.
@@ -73,7 +76,9 @@ if $0 == __FILE__
   
   Bio::FlatFile.open(ARGF).each do |seq|
     result = runner.calculate(seq.seq)
-    if options['s']
+    if result.nil?
+      $stderr.puts "Unexpected empty sequence detected, ignoring: #{seq.definition}"
+    elsif options['s']
       puts [
       seq.entry_id,
       result.nn_D_prediction ? 'T' : 'F',

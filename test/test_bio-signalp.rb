@@ -18,13 +18,12 @@ class TestBioSignalp < Test::Unit::TestCase
 end
 
 class TestSignalPScript < Test::Unit::TestCase
+  command = File.join(File.dirname(__FILE__),'..','bin','signalp.rb')
+  
   should "positive control" do
   # Known to have a signal peptide
     acp_sequence = 'MKILLLCIIFLYYVNAFKNTQKDGVSLQILKKKRSNQVNFLNRKNDYNLIKNKNPSSSLKSTFDDIKKIISKQLSVEEDKIQMNSNFTKDLGADSLDLVELIMALEEKFNVTISDQDALKINTVQDAIDYIEKNNKQ'
 
-    command = "RUBYLIB="+
-    File.join(File.dirname(__FILE__),'..','lib')+' '+
-    File.join(File.dirname(__FILE__),'..','bin','signalp.rb')
     Open3.popen3(command) do |stdin, stdout, stderr|
       stdin.puts '>positive'
       stdin.puts acp_sequence
@@ -33,7 +32,26 @@ class TestSignalPScript < Test::Unit::TestCase
       @result = stdout.readlines # convert to string?
       @error  = stderr.readlines
     end
-    p @result
-    p @error
+    assert_equal [">positive\n", "FKNTQKDGVSLQILKKKRSNQVNFLNRKNDYNLIKNKNPSSSLKSTFDDIKKIISKQLSVEEDKIQMNSNFTKDLGADSLDLVELIMALEEKFNVTISDQDALKINTVQDAIDYIEKNNKQ\n"], @result
+    assert_equal [], @error
+  end
+  
+  should "return gracefully when empty sequences are given" do
+    acp_sequence = 'MKILLLCIIFLYYVNAFKNTQKDGVSLQILKKKRSNQVNFLNRKNDYNLIKNKNPSSSLKSTFDDIKKIISKQLSVEEDKIQMNSNFTKDLGADSLDLVELIMALEEKFNVTISDQDALKINTVQDAIDYIEKNNKQ'
+    
+    Open3.popen3(command) do |stdin, stdout, stderr|
+      stdin.puts '>positive'
+      stdin.puts acp_sequence
+      stdin.puts '>empty'
+      stdin.puts '>positive2'
+      stdin.puts acp_sequence
+      stdin.close
+      
+      @result = stdout.readlines # convert to string?
+      @error  = stderr.readlines
+    end
+    assert_equal [">positive\n", "FKNTQKDGVSLQILKKKRSNQVNFLNRKNDYNLIKNKNPSSSLKSTFDDIKKIISKQLSVEEDKIQMNSNFTKDLGADSLDLVELIMALEEKFNVTISDQDALKINTVQDAIDYIEKNNKQ\n",
+    ">positive2\n", "FKNTQKDGVSLQILKKKRSNQVNFLNRKNDYNLIKNKNPSSSLKSTFDDIKKIISKQLSVEEDKIQMNSNFTKDLGADSLDLVELIMALEEKFNVTISDQDALKINTVQDAIDYIEKNNKQ\n"], @result
+    assert_equal ["Unexpected empty sequence detected, ignoring: empty\n"], @error
   end
 end

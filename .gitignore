@@ -34,7 +34,7 @@ pkg
 #tmtags
 
 # For emacs:
-#*~
+*~
 #\#*
 #.\#*
 
@@ -46,3 +46,6 @@ pkg
 
 # For rubinius:
 #*.rbc
+
+Gemfile.lock
+.project
