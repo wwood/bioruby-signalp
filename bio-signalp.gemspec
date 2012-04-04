@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "bio-signalp"
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ben J Woodcroft"]
-  s.date = "2012-03-29"
+  s.date = "2012-04-04"
   s.description = "A wrapper for the signal peptide prediction algorith SignalP. Not very well supported, but seems to work for the author, at least."
   s.email = "donttrustben near gmail.com"
   s.executables = ["signalp.rb"]
