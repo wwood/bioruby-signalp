@@ -2,11 +2,11 @@
 
 A wrapper for the signal peptide prediction algorithm SignalP.
 
-Using ```bio-signalp``` requires SignalP to be locally installed and configured correctly. http://www.cbs.dtu.dk/services/SignalP/ has instructions on how it may be downloaded. This gem works best when the signalp executable is available from the command line (i.e. running 'signalp' works at the command).
+Using ```bio-signalp``` requires SignalP to be locally installed and configured correctly. http://www.cbs.dtu.dk/services/SignalP/ has instructions on how it may be downloaded. This gem works best when the signalp executable is available from the command line (i.e. running 'signalp' by itself works at the commandline).
 
 # Installation
 
-First you need to setup SignalP itself. ```bio-signalp`` is tested with SignalP versions 3.0 and 4.0.
+First you need to setup SignalP itself. ```bio-signalp``` is tested with SignalP versions 3.0 and 4.0.
 
 1. Download SignalP and unpack the archive
 2. Modify the signalp script in the unpacked directory. Specific instructions are provided in the script itself.
@@ -51,7 +51,7 @@ result.cleavage_site #=> 17. The Ymax output from SignalP gives the predicted cl
 result.cleave(acp_sequence) #=> 'FKNTQKDGVSLQILKKKRSNQVNFLNRKNDYNLIKNKNPSSSLKSTFDDIKKIISKQLSVEEDKIQMNSNFTKDLGADSLDLVELIMALEEKFNVTISDQDALKINTVQDAIDYIEKNNKQ'. The acp_sequence after signal peptide cleavage.
 ```
 
-== Copyright
+# Copyright
 
 Copyright (c) 2011-2012 Ben J Woodcroft. See LICENSE.txt for
 further details.
