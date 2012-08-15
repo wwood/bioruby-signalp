@@ -25,7 +25,7 @@ o = OptionParser.new do |opts|
       
     This default output can be changed by using one (only) of -s, -S, -v, -f, -F.\n\n"
     
-  opts.on("-s", "--summary", "print a tab separated table indicating if the sequence had a signal peptide results (if Signalp 3 is used, HMM and NN predictions are both given, respectively [default: #{options[:eg]}]") do |arg|
+  opts.on("-s", "--summary", "print a tab separated table indicating if the sequence had a signal peptide results (if Signalp 3 is used, HMM and NN predictions are both given, respectively [default: no]") do |arg|
     options['s'] = true
   end
   opts.on("-S", "--bigger-summary", "like -s, except also includes where the cleavage site is predicted [default: no]") do
