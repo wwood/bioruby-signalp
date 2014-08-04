@@ -2,12 +2,12 @@ module Bio
   module SignalP
     NUM_FIELDS_IN_VERSION3_SHORT_OUTPUT = 21
     NUM_FIELDS_IN_VERSION4_SHORT_OUTPUT = 12
-    
+
     class Wrapper
       def log
         log = Bio::Log::LoggerPlus['bio-signalp']
       end
-      
+
       # Given an amino acid sequence, return a SignalP Result
       # representing it taken from the file. The version of SignalP used
       # is auto-detected (versions 3 and 4 are supported)
@@ -18,35 +18,35 @@ module Bio
       # Returns nil if the sequence is empty
       def calculate(sequence, options={})
         return nil if sequence.nil? or sequence == ''
-        
+
         default_options = {
           :binary_path => 'signalp'
         }
         options = default_options.merge options
         raise "Unexpected option parameters passed in #{options.inspect}" unless options.length == default_options.length
         options[:binary_path] ||= default_options[:binary_path] #in case nil is passed here
-        
+
         # This command needs to work with all versions of SignalP (currently v3 and v4)
         command = "#{options[:binary_path]} -f short -t euk"
         log.debug "Running signalp command: #{command}" if log.debug?
         Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
           stdin.puts '>wrapperSeq'
-          stdin.puts "#{sequence}"
+          stdin.puts "#{sequence[0..500]}" #Only give the first 500 amino acids because v3 fails on massive aaseqs
           stdin.close
-          
+
           result = stdout.readlines
           error = stderr.readlines
-          
+
           unless error.empty?
             raise Exception, "There appears to be a problem while running signalp:\n#{error}"
           end
-          
+
           # Error checking
           num_expected_result_lines = 3
           unless result.length == num_expected_result_lines
             raise Exception, "Unexpected number of lines found in SignalP output (#{result.length}, expected #{num_expected_result_lines}):\n#{result}"
           end
-          
+
           splits = result[2].strip.split(/[ \t]+/)
           if splits.length == NUM_FIELDS_IN_VERSION3_SHORT_OUTPUT
             # SignalP 3 detected, use that
@@ -63,7 +63,7 @@ module Bio
         end
       end
     end
-    
+
     # A module for methods common to different SignalP version Result classes.
     module Common
       # Given an amino acid sequence (as a string),
@@ -76,7 +76,7 @@ module Bio
           return sequence
         end
       end
-      
+
       # Simple method: 'Y' => true, 'N' => false, else nil
       def to_bool(string)
         if string === 'Y'
